@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id='box'>
+        <p>{{msg}}</p>
+        <div v-text='msg1'></div>
+        <div v-html="msg1"></div>
+        <!-- <input type="button" v-bind:title='msg3' v-on:click="show" value='按钮'> -->
+        <input type="button" :title='msg3' @mouseover="show" value='按钮'>
+
+    </div>
+</body>
+
+<script>
+    var vm = new Vue({
+        el:'#box',
+        data:{
+            msg:'老赵打鬼',
+            msg1:'<h1>这是一个h1标签<h1>',
+            msg3:'属性绑定'
+        },
+        methods:{
+            show:function(){
+                console.log('老赵打鬼!!!!!啊啊啊啊啊啊啊')
+            }
+        }
+    })
+</script>
+</html>

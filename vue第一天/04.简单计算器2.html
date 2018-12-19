@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src='./lib/vue-2.4.0.js'></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model='a'>
+        <select v-model='x'>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" v-model='b'>
+        <input type="button" value="=" @click='calc'>
+        <input type="text" disabled :value='result'>
+    </div>
+    <script>
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                a: 0,
+                b: 0,
+                x: '+',
+                result: 0
+            },
+            methods: {
+                calc() {
+                    switch (this.x) {
+                        case '+':
+                            this.result = parseFloat(this.a) + parseFloat(this.b)
+                            break;
+                        case '-':
+                            this.result = parseFloat(this.a) - parseFloat(this.b)
+                            break;
+                        case '*':
+                            this.result = parseFloat(this.a) * parseFloat(this.b)
+                            break;
+                        case '/':
+                            this.result = parseFloat(this.a) / parseFloat(this.b)
+                            break;
+                    }
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box1{
+            width: 400px;
+            height: 400px;
+            background-color: aquamarine
+        }
+        .box2{
+            width: 200px;
+            height: 200px;
+            background-color: pink
+        }
+    </style>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id='app'>
+        <div @click="outerHandler" class="box1">
+            <div @click="innerHandler" class="box2">
+                <input type="button" value="按钮1" @click.stop='btn1'>
+                <input type="button" value="按钮2" @click='btn2'>
+
+            </div>
+        </div>
+        <!-- <a href="http://www.baidu.com" @click.prevent>{{msg}}</a> -->
+    </div>
+    
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'阻止事件默认行为'
+            },
+            methods:{
+                btn1(){
+                    console.log('点击第一个按钮触发的事件')
+                },
+                btn2(){
+                    console.log('点击第二个按钮触发的事件')
+                },
+                innerHandler(){
+                    console.log('点击内部盒子触发的事件')
+                },
+                outerHandler(){
+                    console.log('点击外部盒子触发的事件')
+                }
+            }
+        })
+    
+    </script>
+</body>
+</html>
