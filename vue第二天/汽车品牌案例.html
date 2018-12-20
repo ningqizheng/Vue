@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id='app'>
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="exampleInputName2">Id:</label>
+                <input type="text" class="form-control" v-model='id'>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail2">Name:</label>
+                <input type="text" class="form-control" v-model='name'>
+            </div>
+            <button type="submit" class="btn btn-default btn-primary" @click='add'>添加</button>
+            <div class="form-group">
+                    <input type="text" class="form-control " v-model='keywords'>
+            </div>
+            <button type="submit" class="btn btn-default btn-success" >搜索</button>
+        </form>
+
+        <table class="table table-striped">
+            <tr>
+                <td>Id</td>
+                <td>品牌</td>
+                <td>时间</td>
+                <td></td>
+            </tr>
+            <tr v-for='item in search()' :key='item.id'>
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.ctime}}</td>
+                <td><a href="#" @click.prevent='del(item.id)'>删除</a></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                id:'',
+                name:'',
+                keywords:'',
+                list: [
+                    { id: 1, name: '奔驰', ctime: new Date() },
+                    { id: 2, name: '宝马', ctime: new Date() },
+                    { id: 3, name: '奥迪', ctime: new Date() }
+                ]
+            },
+            methods:{
+                add(){
+                    if(this.id==''||this.name=='') return
+                    //将用户输入的数据获取到组成一个对象添加到list数组中,v-for会自动渲染,完全不用像原生js或者jquery那样操作dom那样操作
+                    this.list.push({id:this.id,name:this.name,ctime:new Date()})
+                },
+                del(id){
+                    // this.list.some((item,index)=>{
+                    //     if(item.id==id){
+                    //         this.list.splice(index,1)
+                    //     }
+                    //     return true
+                    // })
+                    let index = this.list.findIndex(item=>{
+                        if(item.id==id){
+                            return true
+                        }
+                    })
+                    console.log(index)
+                    this.list.splice(index,1)
+                },
+                search(){
+                    //search方法的返回值必须是符合要求的数组对象,
+                    
+                    let a =  this.list.filter(item=>{
+                        if(item.name.indexOf(this.keywords.trim())!=-1){
+                            return item
+                        }
+                    })
+                    // console.log(a)
+                    return a
+                }
+
+            }
+        })
+    </script>
+</body>
+
+</html>
