@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+    <script src='./lib/vue-2.4.0.js'></script>
+    <script src="./lib/moment.js"></script>
+</head>
+
+<body>
+    <div id='app'>
+        <nav class="navbar navbar-default ">
+            <div class="container-fluid bg-info">
+                <div class="navbar-header ">
+                    <a class="navbar-brand" href="#" >
+                        Cars
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <form class="form-inline">
+                <div class="form-group">
+                  <label for="exampleInputName2">Id:</label>
+                  <input type="text" class="form-control" v-model='id'>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail2">Name:</label>
+                  <input type="text" class="form-control" v-model='name' @keyup.f2='add'>
+                </div>
+                <button type="submit" class="btn btn-default" @click.prevent='add'>Add</button>
+                搜索:<input type="text" class="form-control" v-model='keywords' v-focus v-color='"green"'>
+              </form>
+              <table class="table table-striped">
+                    <tr >
+                        <td>Id</td>
+                        <td>Name</td>
+                        <td>creatTime</td>
+                        <td>isDel</td>
+                    </tr> 
+                    <tr v-for='item in search()' :key='item.id'>
+                        <td>{{item.id}}</td>
+                        <td v-text='item.name'></td>
+                        <td>{{item.ctime | creatTime}}</td>
+                        <td><a href="" @click.prevent='del(item.id)'>删除</a></td>
+                    </tr>
+                </table>
+    </div>
+    <script>
+        //自定义全局过滤器
+        Vue.filter('creatTime',(a)=>{
+            console.log(a)//这里的a默认为要操作的数据
+            return moment().format('YYYY-MM-DD HH:mm:ss')
+        })
+        //自定义全局按键修饰符
+        Vue.config.keyCodes.f2 = 113
+
+        //使用Vue.directive()自定义全局指令,定义指令的时候V-focus
+        //两个参数,第一个为指令名字,第二个为对象
+        Vue.directive('focus',{
+            bind:function(){
+                
+            },
+            inserted:function(el){
+                el.focus()
+                //和js有关的操作最好放在inserted中执行,放在bind中不执行,因为元素还没插入到dom中去
+            },
+            updated:function(){
+
+            }
+        })
+        //自定义一个设置颜色的指令
+        Vue.directive('color',{
+            bind:function(el,binding){
+                console.log(binding)
+                //和样式有关的操作一般都放在bind中执行
+                el.style.color=binding.value
+            }
+        })
+
+
+
+
+
+
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                id:'',
+                name:'',
+                keywords:'',
+                list:[
+                    {id:1,name:'梅赛德斯奔驰',ctime:new Date},
+                    {id:2,name:'奥迪',ctime:new Date},
+                    {id:3,name:'凯迪拉克',ctime:new Date}
+                    ]
+            },
+            methods:{
+                add(){
+                    if(this.id==''||this.name=='') return 
+                    this.list.push({id:this.id,name:this.name,ctime:new Date})
+                },
+                del(id){
+                    this.list.some((item,i)=>{
+                        if(item.id==id){
+                            this.list.splice(i,1)
+                            return true
+                        }
+                        
+                    })
+                },
+                search(){
+                    return this.list.filter(item=>{
+                        if(item.name.indexOf(this.keywords.trim())!=-1){
+                            return item
+                        }
+                    })
+                }
+
+            }
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <script src="./lib/vue-resource-1.3.4.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="getInfo" @click='getInfo'>
+        <input type="button" value="getPost" @click='getPost'>
+        <input type="button" value="getJsonP" @click='getJsonP'>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{
+                getInfo(){
+                    this.$http.get('http://vue.studyit.io/api/getlunbo').then((res)=>{
+                        console.log(res.body)
+                    })
+                },
+                getPost(){
+                    this.$http.post('http://vue.studyit.io/api/post',{},{emulateJSON:true}).then((res)=>{
+                        console.log(res.body)
+                    })
+                },
+                getJsonP(){
+                    this.$http.jsonp('http://vue.studyit.io/api/jsonp').then((res)=>{
+                        console.log(res.body)
+                    })
+                }   
+            }
+        })
+    
+    </script>
+</body>
+</html>
