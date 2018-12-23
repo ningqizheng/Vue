@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        .a-enter , 
+        .a-leave-to{
+            /* opacity: 0; */
+            transform: translateX(150px)
+        }
+        .a-enter-active , 
+        .a-leave-active{
+            transition: all 2s ease
+        }
+
+        .b-enter , 
+        .b-leave-to{
+            /* opacity: 0; */
+            transform: translateY(150px)
+        }
+        .b-enter-active , 
+        .b-leave-active{
+            transition: all 2s ease
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click='flag=!flag'>
+        <transition name='a'>
+            <p v-if='flag'>枕风宿,雪多年,我与虎谋早餐</p>
+        </transition>
+        <transition name='b'>
+            <p v-if='flag'>入乡间吃汤面</p>
+        </transition>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false
+            },
+            created(){
+                
+            },
+            methods: {}
+        })
+    </script>
+</body>
+
+</html>
