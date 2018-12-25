@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+    <style>
+        .a{
+            border:1px dashed orange;
+            background-color: pink;
+            list-style: none;
+            line-height: 50px;
+            border-radius: 35px;
+            margin: 5px 0
+        }
+        .v-enter,.v-leave-to{
+            opacity: 0;
+            transform: translateY(80px)
+        }
+        .v-enter-active,.v-leave-active{
+            transition:all .8s ease
+        }
+    </style>
+<body>
+    <div id="app">
+        <label for="">
+            ID:
+            <input type="text" v-model='id'>
+        </label>
+        <label for="">
+            Name:
+            <input type="text" v-model='name'>
+        </label>
+        <input type="button" value="添加" @click='add'>
+        
+        <transition-group apper tag='ul'>
+                <li v-for='(item ,i) in list' :key='item.id' :class='"a"' @click='del(i)'>
+                        {{item.id}}---{{item.name}}
+                    </li>
+        </transition-group>
+
+
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                id:'',
+                name:'',
+                x:{a:true},
+                list: [{ id: 1, name: '取腰间明珠弹山雀' },
+                { id: 2, name: '立琵琶于庭前' },
+                { id: 3, name: '入乡间吃汤面' }]
+            },
+            methods: {
+                add(){
+                    this.list.push({id:this.id,name:this.name})
+                },
+                del(i){
+                    this.list.splice(i,1)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

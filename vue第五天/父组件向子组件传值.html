@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 通过属性绑定,将父组件里的数据msg传递到子组件里 -->
+        <com1 :parentmsg='msg'></com1>
+    </div>
+    <template id='a'>
+
+            <h1>这是子组件-------------{{parentmsg}}</h1>
+
+    </template>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '老赵打鬼啊啊啊啊啊啊啊啊啊啊'
+            },
+            methods: {},
+            //定义私有组件,是一个对象
+            components: {
+                com1: {
+                    data() {
+                        return '阿夹克倩'
+                    },
+                    template:'#a',
+                    // 自定义的属性必须在props数组中定义,才能在子组件中使用,并且props中的值是只读属性,不能修改
+                    props:['parentmsg']
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
