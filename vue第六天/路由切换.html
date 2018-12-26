@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+    <script src="./lib/vue-2.4.0.js"></script>
+    <script src="./lib/vue-router-3.0.1.js"></script>
+    <style>
+        /* .router-link-active{
+            font-size: 30px
+        } */
+    
+        .v-enter,.v-leave-to{
+            opacity: 0;
+            transform: translate(150px)
+        }
+        .v-enter-active,.v-leave-active{
+            transition: all .5s ease
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <a href="#/login">登录</a>
+        <a href="#/register">注册</a> -->
+        <router-link to='/register' tag='span'>注册</router-link>
+        <router-link to='/login/12' tag='span'>登录</router-link>
+        <transition mode='out-in'>
+                <router-view></router-view>
+        </transition>
+       
+    </div>
+    <script>
+        let login = {
+            template:'<h1>登录组件----{{$route.params.id}}</h1>'
+        }
+        let register = {
+            template:'<h1>注册组件</h1>'
+        }
+        //声明路由规则模块实例
+        let routerobj = new VueRouter({
+            routes:[
+                {path:'/',redirect:'/login'},//访问根路径,重定向到/login页面
+                {path:'/login/:id',component:login},//params传参,对应的路由匹配规则也得改变
+                {path:'/register',component:register}
+            ],
+            //可以自定义router-link的类样式,
+            linkActiveClass:'bg-danger'
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router:routerobj,
+            
+        })
+    </script>
+</body>
+
+</html>

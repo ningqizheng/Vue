@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .v-enter,.v-leave-to{
+            opacity: 0;
+            transform: translate(150px)
+        }
+        .v-enter-active,.v-leave-active{
+            transition: all .5s ease
+        }
+        .router-link-active{
+            font-size: 20px;
+            color: orange;
+            font-weight: bolder;
+        }
+    </style>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <script src="./lib/vue-router-3.0.1.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 在不刷新页面的情况下仍然可以点击显示父组件内容 -->
+        <router-link to='/dad' tag='span'>宁采臣</router-link>
+        <!-- 父组件的视口 -->
+        <router-view></router-view>
+    </div>
+
+    <!-- 这是父组件里的内容 -->
+    <template id='dad'>
+                    <div>
+                            <h1>这是宁采臣爸爸的孩儿们</h1>
+                            <router-link to='/dad/son1' tag='span'>老赵</router-link>
+                            <router-link to='/dad/son2' tag='span'>阿夹克倩</router-link>
+                            <transition mode='out-in'>
+                                    <router-view></router-view>
+                            </transition>
+                    </div>
+    </template>
+    <script>
+        // 定义父组件
+        let dad = {
+            template:'#dad'
+        }
+        // 定义子组件
+        let son1 = {
+            template:'<h3>大儿子</h3>'
+        }
+        let son2 = {
+            template:'<h3>小儿子</h3>'
+        }
+        //定义路由规则
+        let router = new VueRouter({
+            //routes是一个数组,因为肯定要定义多个路由规则
+            routes:[
+                //定义父组件路由
+                {path:'/dad',component:dad,children:[
+                    {path:'/dad/son1',component:son1},
+                    {path:'/dad/son2',component:son2}
+
+                ]}
+            ]
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router:router
+        })
+    </script>
+</body>
+
+</html>

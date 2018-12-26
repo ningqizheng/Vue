@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 第一种方式监听键盘抬起事件 -->
+        <!-- <input type="text" v-model='a' @keyup='calc'>+
+        <input type="text" v-model='b'  @keyup='calc'>=
+        <input type="text" v-model='c'> -->
+
+
+
+        <!-- 第二种方法应用watch监听 -->
+        <!-- <input type="text" v-model='a' >+
+        <input type="text" v-model='b'  >=
+        <input type="text" v-model='c'> -->
+
+
+        <!-- 第三种方法应用computed对象 -->
+        <input type="text" v-model='a' >+
+        <input type="text" v-model='b'  >=
+        <input type="text" v-model='c'>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                a:'',
+                b:'',
+                
+            },
+            methods: {},
+            // watch:{
+            //     'a':function(to,from){
+            //         this.c = to + this.b
+            //     },
+            //     'b':function(to,from){
+            //         this.c = to +this.a
+            //     }
+
+            // }
+            computed: {
+                c:function(){
+                    return this.c = this.a+this.b
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

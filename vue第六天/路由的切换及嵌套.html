@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .v-enter,.v-leave-to{
+            opacity: 0;
+            transform: translate(150px)
+        }
+        .v-enter-active,.v-leave-active{
+            transition: all .5s ease
+        }
+    </style>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <script src="./lib/vue-router-3.0.1.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/dad'>dad</router-link>
+        <router-view></router-view>
+    </div>
+    <template id='dad'>
+            <div>
+                    <h1>这是父组件</h1>
+                    <router-link to='/dad/son1?name=zs'>登录</router-link>
+                    <router-link to='/dad/son2/666'>注册</router-link>
+                    <transition mode='out-in'>
+                            <router-view></router-view>
+                    </transition>
+            </div>
+    </template>
+    <script>
+        //声明一个父组件
+        let dad = {
+            template:'#dad'
+            
+        }
+        let son1 = {
+            template:'<h3>登录组件--{{$route.query.name}}</h3>',
+            created(){
+                console.log(this.$route)
+            }
+        }
+        let son2 = {
+            template:'<h3>注册组件--{{$route.params.id}}</h3>'
+        }
+        //声明路由构造实例
+        let router = new VueRouter({
+            routes:[{
+                path:'/dad',component:dad,
+                children:[
+                    {path:'/dad/son1',component:son1},
+                    {path:'/dad/son2/:id',component:son2}
+
+                ]
+            }]
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        })
+    </script>
+</body>
+
+</html>

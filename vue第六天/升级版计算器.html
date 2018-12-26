@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model='a' @keyup='calc'>
+        <select v-model='opt'>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" v-model='b' @keyup='calc'>
+        <input type="button" value="=">
+        <input type="text" :value='x'>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                a: '',
+                b: '',
+                x: '',
+                opt: '+'
+            },
+            methods: {
+                calc() {
+                    switch (this.opt) {
+                        case '+':
+                        //注意用户输入的数字为string类型
+                            this.x = parseFloat(this.a) + parseFloat(this.b)
+                            break;
+                        case '-':
+                            this.x = parseFloat(this.a) - parseFloat(this.b)
+                            break;
+                        case '*':
+                            this.x = parseFloat(this.a) * parseFloat(this.b)
+                            break;
+                        case '/':
+                            this.x = parseFloat(this.a) / parseFloat(this.b)
+                            break;
+
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
